@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DROPZONE — Fortnite Player Hub</title>
+<style>
+:root{--bg:#090b13;--panel:#121725;--panel2:#192236;--line:#27324a;--text:#f4f6ff;--muted:#a5aec4;--cyan:#55e5ff;--purple:#a78bfa;--green:#65e6a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -10%,#29205a 0,transparent 38%),radial-gradient(ellipse at 0 25%,#103a50 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.wrap{max-width:1160px;margin:auto;padding:0 24px}
+header{height:76px;border-bottom:1px solid #ffffff14;background:#090b13b8;backdrop-filter:blur(14px);position:sticky;top:0;z-index:5}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{font-weight:950;letter-spacing:1.5px;font-size:21px}.brand span{color:var(--cyan)}nav{display:flex;gap:26px;color:var(--muted);font-size:14px}nav a:hover{color:white}.pill{border:1px solid #ffffff24;border-radius:999px;padding:9px 14px;font-size:12px;color:var(--cyan);font-weight:800;letter-spacing:.6px}
+.hero{padding:65px 0 38px;display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center}.eyebrow{color:var(--cyan);font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.98;margin:14px 0 18px;letter-spacing:-3px}.hero h1 em{font-style:normal;color:var(--cyan)}.hero p{color:var(--muted);line-height:1.7;max-width:600px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}.btn{display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:13px 18px;font-weight:850;font-size:13px;background:var(--cyan);color:#061019}.btn.secondary{background:#ffffff0b;color:white;border:1px solid #ffffff25}
+.hero-card{background:linear-gradient(145deg,#242b4d,#111a2b 65%);border:1px solid #ffffff20;border-radius:20px;padding:24px;min-height:235px;position:relative;overflow:hidden}.hero-card:after{content:"FN";position:absolute;font-size:160px;font-weight:1000;right:-5px;bottom:-52px;color:#ffffff09;transform:rotate(-12deg)}.hero-card .tag{display:inline-block;padding:6px 9px;border-radius:6px;background:#55e5ff20;color:var(--cyan);font-size:10px;font-weight:900;letter-spacing:1px}.hero-card h2{font-size:25px;max-width:260px;margin:18px 0 8px}.hero-card p{font-size:13px;max-width:260px}.hero-card a{color:var(--cyan);font-weight:800;font-size:13px}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:38px 0 17px;gap:15px}.section-head h2{font-size:24px;margin:0}.section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}.section-head a{font-size:13px;color:var(--cyan);font-weight:800}
+.status{display:flex;align-items:center;gap:12px;background:#101c1b;border:1px solid #24473e;border-radius:13px;padding:15px 17px;margin:22px 0 30px}.dot{width:9px;height:9px;background:var(--green);border-radius:50%;box-shadow:0 0 14px var(--green)}.status strong{font-size:13px}.status small{display:block;color:var(--muted);margin-top:3px}.status .right{margin-left:auto;color:var(--green);font-size:11px;font-weight:900;letter-spacing:1px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}.search{flex:1;min-width:190px;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:12px 14px;color:white;font:inherit;outline:none}.filter{background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:0 13px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.news{background:linear-gradient(160deg,#172137,#101624);border:1px solid var(--line);border-radius:14px;padding:19px;min-height:205px;display:flex;flex-direction:column;transition:.2s}.news:hover{transform:translateY(-3px);border-color:#55e5ff88}.news .meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:11px}.category{color:var(--cyan);font-weight:900;text-transform:uppercase;letter-spacing:.8px}.news h3{font-size:18px;line-height:1.25;margin:20px 0 10px}.news p{font-size:13px;color:var(--muted);line-height:1.5;margin:0 0 18px}.news a{margin-top:auto;color:var(--cyan);font-weight:850;font-size:12px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:18px 0 55px}.quick a{padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:13px}.quick b{display:block;margin:9px 0 5px}.quick small{color:var(--muted);line-height:1.4}.ico{font-size:22px}
+footer{border-top:1px solid #ffffff14;padding:25px 0 35px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:45px}.grid{grid-template-columns:repeat(2,1fr)}.quick{grid-template-columns:repeat(2,1fr)}nav{gap:12px}nav a:nth-child(3){display:none}}
+@media(max-width:520px){.wrap{padding:0 16px}.grid{grid-template-columns:1fr}.hero h1{letter-spacing:-2px}.pill{display:none}.quick{grid-template-columns:1fr 1fr}nav{font-size:12px}}
+
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin:18px 0 34px}
+.feature-panel{background:linear-gradient(160deg,#172137,#101624);border:1px solid var(--line);border-radius:14px;padding:19px}
+.feature-panel h3{margin:0 0 8px;font-size:18px}.feature-panel p{color:var(--muted);font-size:13px;line-height:1.55}
+.feature-panel .mini-tag{font-size:10px;font-weight:900;letter-spacing:.8px;color:var(--purple);text-transform:uppercase}
+.feature-link{display:inline-block;color:var(--cyan);font-size:12px;font-weight:850;margin-top:8px}
+.code-row{display:flex;gap:8px;align-items:center;justify-content:space-between;background:#0c1220;border:1px solid var(--line);padding:10px 12px;border-radius:9px;margin-top:9px;font-size:13px}
+.code-row code{color:#fff;font-weight:800}.copy-btn{border:0;border-radius:7px;background:#243651;color:var(--cyan);padding:7px 10px;font-weight:800;cursor:pointer}
+.progress{height:9px;border-radius:20px;background:#29334a;overflow:hidden;margin:12px 0}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple));border-radius:20px}
+.tracker-input{display:flex;gap:8px;margin-top:12px}.tracker-input input{min-width:0;flex:1;background:#0c1220;border:1px solid var(--line);border-radius:8px;padding:10px;color:white}
+.tracker-input button{border:0;border-radius:8px;padding:0 13px;background:var(--cyan);color:#061019;font-weight:900;cursor:pointer}
+.notice{border:1px solid #5b4b27;background:#241f14;color:#e9d6a2;padding:12px 14px;border-radius:10px;font-size:12px;line-height:1.5}
+.countdown{font-size:27px;font-weight:950;letter-spacing:1px;color:var(--cyan);margin:12px 0}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:13px}
+.toggle-row input{accent-color:#55e5ff;width:17px;height:17px}
+@media(max-width:700px){.feature-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header><div class="wrap nav"><a class="brand" href="#">DROP<span>ZONE</span></a><nav><a href="#news">News</a><a href="#status">Server status</a><a href="#extras">Tools</a><a href="#links">Player links</a></nav><span class="pill">UNOFFICIAL PLAYER HUB</span></div></header>
+<main class="wrap">
+<section class="hero">
+ <div><div class="eyebrow">Your Fortnite briefing</div><h1>STAY IN THE<br><em>DROP.</em></h1><p>Epic updates, Fortnite announcements and useful player links — all in one place. Check what’s new before you queue up.</p><div class="actions"><a class="btn" href="#news">EXPLORE LATEST NEWS ↓</a><a class="btn secondary" href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">EPIC NEWS ↗</a></div></div>
+ <div class="hero-card"><span class="tag">LATEST FROM EPIC</span><h2>Kasane Teto headlines the next Music Pass</h2><p>Epic’s November 11 announcement is featured on the official Fortnite news page.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">READ ON FORTNITE.COM ↗</a></div>
+</section>
+<section id="status"><div class="section-head"><div><h2>Game status</h2><p>Check whether Fortnite services are having issues.</p></div><a href="https://status.epicgames.com/" target="_blank" rel="noreferrer">FULL STATUS PAGE ↗</a></div>
+<div class="status"><span class="dot" id="statusDot"></span><div><strong id="statusTitle">Checking Epic Games services…</strong><small id="statusDetail">Loading the latest status from Epic’s public status API.</small></div><span class="right" id="statusBadge">CHECKING</span></div></section>
+<section id="news"><div class="section-head"><div><h2>Latest Fortnite news</h2><p>Recent announcements listed on Epic’s official news page.</p></div><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">ALL EPIC NEWS ↗</a></div>
+<div class="toolbar"><input class="search" id="search" placeholder="Search Fortnite news…" aria-label="Search news"><select class="filter" id="filter" aria-label="Filter news"><option value="all">All categories</option><option value="battle royale">Battle Royale</option><option value="festival">Festival</option><option value="crew">Crew</option><option value="events">Events</option></select></div>
+<div class="grid" id="newsGrid">
+<article class="news" data-category="festival"><div class="meta"><span class="category">Festival</span><span>Nov 11, 2026</span></div><h3>Kasane Teto Headlines the Next Fortnite Music Pass</h3><p>Epic’s featured announcement for the next Music Pass.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+<article class="news" data-category="crew"><div class="meta"><span class="category">Crew</span><span>Nov 04, 2026</span></div><h3>Big Changes to Fortnite Crew Launching December 5</h3><p>Epic outlines upcoming changes to the Fortnite Crew subscription.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+<article class="news" data-category="events"><div class="meta"><span class="category">Battle Royale · Events</span><span>Oct 30, 2026</span></div><h3>Fortnite Treasure Hunters: The Greatest Adventure of All Time</h3><p>A new adventure announcement featured by Epic Games.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+<article class="news" data-category="events"><div class="meta"><span class="category">Battle Royale · Events</span><span>Oct 01, 2026</span></div><h3>The Corruption Spreads in Fortnitemares 2026</h3><p>Epic’s seasonal Fortnitemares announcement.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+<article class="news" data-category="battle royale"><div class="meta"><span class="category">Battle Royale</span><span>Sep 17, 2026</span></div><h3>Journey Across Worlds with KINGDOM HEARTS in Fortnite</h3><p>A crossover announcement from the official Fortnite newsroom.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+<article class="news" data-category="battle royale"><div class="meta"><span class="category">Battle Royale</span><span>Aug 20, 2026</span></div><h3>Fortnite Override: Break the Rules. Change the Game.</h3><p>One of the recent Battle Royale announcements listed by Epic.</p><a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">VIEW OFFICIAL ARTICLE ↗</a></article>
+</div></section>
+
+<section id="extras">
+ <div class="section-head"><div><h2>More for your game</h2><p>Tools, community discoveries and things to keep track of.</p></div></div>
+ <div class="feature-grid">
+  <div class="feature-panel">
+   <span class="mini-tag">Unofficial · Community</span>
+   <h3>🕵️ Leaks & rumours</h3>
+   <p>Keep an eye on community-reported leaks. These are not confirmed by Epic, and may change or never arrive in-game.</p>
+   <div class="notice">Rumours are not official news. Check the source and wait for Epic confirmation before treating anything as fact.</div>
+   <a class="feature-link" href="https://www.fortnite.com/news" target="_blank" rel="noreferrer">CHECK EPIC CONFIRMATIONS ↗</a>
+  </div>
+  <div class="feature-panel">
+   <span class="mini-tag">Creative discovery</span>
+   <h3>⚡ XP map codes</h3>
+   <p>Save Creative island codes you want to try. Map XP is determined by the island and Epic's XP calibration, so rewards can change.</p>
+   <div class="code-row"><span>Epic Discover</span><a class="feature-link" href="https://www.fortnite.com/creative" target="_blank" rel="noreferrer">BROWSE MAPS ↗</a></div>
+   <div class="tracker-input"><input id="mapCode" maxlength="20" placeholder="Enter an island code"><button onclick="saveMapCode()">SAVE</button></div>
+   <div id="savedCodes" aria-live="polite"></div>
+  </div>
+  <div class="feature-panel">
+   <span class="mini-tag">Daily refresh</span>
+   <h3>🛒 Item Shop</h3>
+   <p>Open the official shop to see today's cosmetics. This site links to Epic's live shop rather than showing an unverified copy.</p>
+   <div class="code-row"><span>Today's shop</span><a class="feature-link" href="https://www.fortnite.com/item-shop" target="_blank" rel="noreferrer">VIEW SHOP ↗</a></div>
+   <p id="shopDate"></p>
+  </div>
+  <div class="feature-panel">
+   <span class="mini-tag">Your progress</span>
+   <h3>🎟️ Battle Pass tracker</h3>
+   <p>Enter your current level and your target level to track your progress. Your numbers stay in this page while it is open.</p>
+   <div class="tracker-input"><input id="currentLevel" type="number" min="1" max="1000" placeholder="Current level"><input id="targetLevel" type="number" min="1" max="1000" placeholder="Target"></div>
+   <button class="copy-btn" style="margin-top:10px" onclick="updatePass()">UPDATE PROGRESS</button>
+   <div class="progress"><span id="passProgress"></span></div>
+   <p id="passLabel">Enter your levels to get started.</p>
+  </div>
+  <div class="feature-panel">
+   <span class="mini-tag">Competitive</span>
+   <h3>🏆 Tournament countdown</h3>
+   <p>Find official tournament schedules and event details. The countdown below is a sample timer until the next UTC midnight, not a tournament start time.</p>
+   <div class="countdown" id="countdown">--:--:--</div>
+   <a class="feature-link" href="https://www.fortnite.com/competitive" target="_blank" rel="noreferrer">OFFICIAL COMPETITIVE PAGE ↗</a>
+  </div>
+  <div class="feature-panel">
+   <span class="mini-tag">Stay informed</span>
+   <h3>🔔 Update & downtime alerts</h3>
+   <p>Choose the alerts you want to keep track of. These preferences are a visual checklist; this static website does not send push notifications.</p>
+   <label class="toggle-row">Game updates <input type="checkbox" class="alertChoice"></label>
+   <label class="toggle-row">Server downtime <input type="checkbox" class="alertChoice"></label>
+   <label class="toggle-row">New Epic announcements <input type="checkbox" class="alertChoice"></label>
+   <a class="feature-link" href="https://status.epicgames.com/" target="_blank" rel="noreferrer">OPEN EPIC STATUS ↗</a>
+  </div>
+ </div>
+</section>
+
+<section id="links"><div class="section-head"><div><h2>Player links</h2><p>Official pages worth bookmarking.</p></div></div><div class="quick">
+<a href="https://www.fortnite.com/news" target="_blank" rel="noreferrer"><span class="ico">📰</span><b>Epic News</b><small>Announcements, updates and patch information.</small></a>
+<a href="https://status.epicgames.com/" target="_blank" rel="noreferrer"><span class="ico">🟢</span><b>Server Status</b><small>Check matchmaking, login and game services.</small></a>
+<a href="https://www.fortnite.com/item-shop" target="_blank" rel="noreferrer"><span class="ico">🛒</span><b>Item Shop</b><small>See the current in-game shop.</small></a>
+<a href="https://www.fortnite.com/competitive" target="_blank" rel="noreferrer"><span class="ico">🏆</span><b>Competitive</b><small>Official tournaments and competitive info.</small></a>
+</div></section>
+<footer><span>DROPZONE · Unofficial Fortnite fan project</span><span>Not affiliated with or endorsed by Epic Games.</span></footer>
+</main>
+<script>
+const search=document.getElementById('search'), filter=document.getElementById('filter');
+function applyFilters(){const q=search.value.toLowerCase(), f=filter.value;document.querySelectorAll('.news').forEach(card=>{const matchText=card.innerText.toLowerCase().includes(q);const matchCategory=f==='all'||card.dataset.category.includes(f);card.style.display=matchText&&matchCategory?'flex':'none';});}
+search.addEventListener('input',applyFilters);filter.addEventListener('change',applyFilters);
+async function loadStatus(){try{const r=await fetch('https://status.epicgames.com/api/v2/status.json');if(!r.ok)throw new Error('Status unavailable');const d=await r.json();const s=d.status||{};const ok=s.indicator==='none';document.getElementById('statusTitle').textContent=s.description||'Status received';document.getElementById('statusDetail').textContent='Epic Games public status · Updated '+new Date(d.page.updated_at).toLocaleString();document.getElementById('statusBadge').textContent=ok?'OPERATIONAL':String(s.indicator||'UNKNOWN').toUpperCase();document.getElementById('statusDot').style.background=ok?'#65e6a5':'#ffbd69';document.getElementById('statusBadge').style.color=ok?'#65e6a5':'#ffbd69';}catch(e){document.getElementById('statusTitle').textContent='Could not load live status';document.getElementById('statusDetail').textContent='Open Epic’s status page for the latest information.';document.getElementById('statusBadge').textContent='OFFLINE';document.getElementById('statusDot').style.background='#ffbd69';}}
+loadStatus();
+
+function saveMapCode(){
+ const input=document.getElementById('mapCode'); const code=input.value.trim();
+ if(!code){input.focus();return;}
+ const row=document.createElement('div'); row.className='code-row';
+ const label=document.createElement('code'); label.textContent=code;
+ const copy=document.createElement('button'); copy.className='copy-btn'; copy.textContent='COPY';
+ copy.onclick=()=>navigator.clipboard?.writeText(code);
+ row.append(label,copy); document.getElementById('savedCodes').prepend(row); input.value='';
+}
+function updatePass(){
+ const current=Number(document.getElementById('currentLevel').value);
+ const target=Number(document.getElementById('targetLevel').value);
+ if(!Number.isFinite(current)||!Number.isFinite(target)||current<1||target<1||target>1000){document.getElementById('passLabel').textContent='Enter valid levels (1–1000).';return;}
+ const pct=Math.max(0,Math.min(100,current/target*100));
+ document.getElementById('passProgress').style.width=pct+'%';
+ document.getElementById('passLabel').textContent=`Level ${current} of ${target} · ${Math.round(pct)}% complete${current>=target?' — target reached!':''}`;
+}
+function updateCountdown(){
+ const now=new Date(); const next=new Date(now); next.setUTCHours(24,0,0,0);
+ const diff=Math.max(0,next-now); const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+ const m=String(Math.floor(diff%3600000/60000)).padStart(2,'0'); const s=String(Math.floor(diff%60000/1000)).padStart(2,'0');
+ const el=document.getElementById('countdown'); if(el)el.textContent=`${h}:${m}:${s}`;
+}
+const shopDateEl=document.getElementById('shopDate'); if(shopDateEl)shopDateEl.textContent='Today: '+new Date().toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
+updateCountdown(); setInterval(updateCountdown,1000);
+
+</script>
+</body></html>
